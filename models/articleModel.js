@@ -2,6 +2,9 @@ const mongoose = require("mongoose"); // import mongoose
 let Schema = mongoose.Schema; // use the mongoose schema object
 const marked = require("marked");
 const slugify = require("slugify");
+const createDomPurify = require("dompurify");
+const { JSDOM } = require("jsdom");
+const dompurify = createDomPurify(new JSDOM().window);
 
 // create Schema
 let articleSchema = new Schema({
@@ -25,6 +28,10 @@ let articleSchema = new Schema({
     required: true,
     unique: true,
   },
+  sanitizedHTML: {
+    type: String,
+    required: true,
+  },
 });
 
 articleSchema.pre("validate", function (next) {
@@ -34,6 +41,10 @@ articleSchema.pre("validate", function (next) {
       lower: true,
       strict: true,
     });
+  }
+
+  if (this.markdown) {
+    this.sanitizedHTML = dompurify.sanitize(marked(this.markdown));
   }
 
   next();
@@ -66,5 +77,13 @@ ArticleModel.deleteArticle = (articleId) => {
   console.log("... RUN - ArticleModel.deleteArticle");
   return ArticleModel.findByIdAndDelete(articleId);
 };
+
+ArticleModel.getArticleById = (articleId) => {
+  console.log("... RUN - ArticleModel.getArticleById");
+  const query = ArticleModel.findById(articleId);
+  return query;
+};
+
+ArticleModel.editArticle = (articleToEdit) => {};
 
 module.exports = ArticleModel;
