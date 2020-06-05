@@ -14,9 +14,12 @@ router.get("/articles", usersController.showAllArticles);
 router.get("/articles/new", usersController.showNewArticlePage);
 
 // GET article by id (R)
-router.get("/articles/:id", usersController.getArticle);
+router.get("/articles/:slug", usersController.getArticle);
 
 // POST new article form (C)
 router.post("/articles", usersController.addArticle);
+
+// DELETE a article (D)
+router.delete("/articles/:id", usersController.deleteArticle);
 
 module.exports = router;

@@ -4,29 +4,33 @@ usersController = {};
 
 usersController.showAllArticles = async (req, res, next) => {
   try {
-    console.log("... usersController.showAllArticles has run");
+    console.log("... RUN - usersController.showAllArticles");
     const articles = await ArticleModel.getAllArticles();
     res.render("pages/users/articles/articles", { articles: articles });
   } catch (e) {
-    console.log("... usersController.showAllArticles error - " + e);
+    console.log(
+      "... Get error when run - usersController.showAllArticles - " + e
+    );
   }
 };
 
 usersController.showNewArticlePage = (req, res, next) => {
   try {
-    console.log("... usersController.showNewArticlePage has run");
+    console.log("... RUN - usersController.showNewArticlePage");
     res.render("pages/users/articles/new", { article: new ArticleModel() });
   } catch (e) {
-    console.log("... usersController.showNewArticlePage error - " + e);
+    console.log(
+      "... Get error when run - usersController.showNewArticlePage - " + e
+    );
   }
 };
 
 usersController.getArticle = async (req, res, next) => {
   try {
-    const article = await ArticleModel.getArticle(req.params.id);
+    const article = await ArticleModel.getArticle(req.params.slug);
     res.render("pages/users/articles/show", { article: article });
   } catch (e) {
-    console.log("... Get error when run usersController.getArticle - " + e);
+    console.log("... Get error when run - usersController.getArticle - " + e);
     res.redirect("/users/articles");
   }
 };
@@ -39,12 +43,26 @@ usersController.addArticle = async (req, res, next) => {
   });
 
   try {
-    console.log("... usersController.addArticle has run");
+    console.log("... RUN - usersController.addArticle");
     articleToAdd = await ArticleModel.addArticle(articleToAdd);
-    res.redirect(`/users/articles/${articleToAdd.id}`);
+    res.redirect(`/users/articles/${articleToAdd.slug}`);
   } catch (e) {
-    console.log("... usersController.addArticle error - " + e);
+    console.log(
+      "... Get error when run - usersController.addArticle error - " + e
+    );
     res.render("pages/users/articles/new", { article: articleToAdd });
+  }
+};
+
+usersController.deleteArticle = async (req, res, next) => {
+  try {
+    console.log("... RUN - usersController.deleteArticle");
+    await ArticleModel.deleteArticle(req.params.id);
+    res.redirect("/users/articles");
+  } catch (e) {
+    console.log(
+      "... Get error when run - usersController.deleteArticle - " + e
+    );
   }
 };
 
