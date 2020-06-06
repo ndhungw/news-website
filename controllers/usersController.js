@@ -2,11 +2,13 @@ const ArticleModel = require("./../models/articleModel");
 
 usersController = {};
 
+/* Manage articles */
+
 usersController.showAllArticles = async (req, res, next) => {
   try {
     console.log("... RUN - usersController.showAllArticles");
     const articles = await ArticleModel.getAllArticles();
-    res.render("pages/users/articles/articles", { articles: articles });
+    res.render("users/articles/articles", { articles: articles });
   } catch (e) {
     console.log(
       "... Get error when run - usersController.showAllArticles - " + e
@@ -17,7 +19,7 @@ usersController.showAllArticles = async (req, res, next) => {
 usersController.showNewArticlePage = (req, res, next) => {
   try {
     console.log("... RUN - usersController.showNewArticlePage");
-    res.render("pages/users/articles/new", { article: new ArticleModel() });
+    res.render("users/articles/new", { article: new ArticleModel() });
   } catch (e) {
     console.log(
       "... Get error when run - usersController.showNewArticlePage - " + e
@@ -28,7 +30,7 @@ usersController.showNewArticlePage = (req, res, next) => {
 usersController.getArticle = async (req, res, next) => {
   try {
     const article = await ArticleModel.getArticle(req.params.slug);
-    res.render("pages/users/articles/show", { article: article });
+    res.render("users/articles/show", { article: article });
   } catch (e) {
     console.log("... Get error when run - usersController.getArticle - " + e);
     res.redirect("/users/articles");
@@ -48,7 +50,7 @@ usersController.addArticle = async (req, res, next) => {
     res.redirect(`/users/articles/${articleToAdd.slug}`);
   } catch (e) {
     console.log("... Get error when run - usersController.addArticle - " + e);
-    res.render("pages/users/articles/new", { article: articleToAdd });
+    res.render("users/articles/new", { article: articleToAdd });
   }
 };
 
@@ -68,7 +70,7 @@ usersController.showEditArticlePage = async (req, res, next) => {
   try {
     console.log("... RUN - usersController.showEditArticlePage");
     let articleToEdit = await ArticleModel.getArticleById(req.params.id);
-    res.render("pages/users/articles/edit", { article: articleToEdit });
+    res.render("users/articles/edit", { article: articleToEdit });
   } catch (e) {
     console.log(
       "... Get error when run - usersController.showEditArticlePage - " + e
@@ -87,7 +89,7 @@ usersController.editArticle = async (req, res, next) => {
     res.redirect(`/users/articles/${articleToEdit.slug}`);
   } catch (e) {
     console.log("... Get error when run - usersController.editArticle - " + e);
-    res.render("pages/users/articles/edit", { article: articleToEdit });
+    res.render("users/articles/edit", { article: articleToEdit });
   }
 };
 
@@ -104,7 +106,7 @@ function saveArticleAndRedirect(path) {
       res.redirect(`/users/articles/${article.slug}`);
     } catch (e) {
       console.log("... Get error when run - saveArticleAndRedirect - " + e);
-      res.render(`pages/users/articles/${path}`, { article: article });
+      res.render(`users/articles/${path}`, { article: article });
     }
   };
 }
@@ -126,5 +128,11 @@ function saveArticleAndRedirect(path) {
 //     }
 //   };
 // };
+
+/* Manage categories */
+usersController.showAllCategories = async (req, res) => {
+  // res.send("show all categories in admin panel");
+  res.render("users/categories/categories");
+};
 
 module.exports = usersController;
