@@ -15,6 +15,10 @@ let articleSchema = new Schema({
   description: {
     type: String,
   },
+  category: {
+    type: String,
+    required: true,
+  },
   markdown: {
     type: String,
     required: true,
@@ -54,7 +58,7 @@ let ArticleModel = mongoose.model("Article", articleSchema, "articles");
 
 // Get all articles
 ArticleModel.getAllArticles = () => {
-  console.log("... RUN - ArticleModel.getAll()");
+  console.log("... RUN - ArticleModel.getAllArticles()");
   const query = ArticleModel.find().sort({
     createdAt: "desc",
   });
@@ -62,24 +66,34 @@ ArticleModel.getAllArticles = () => {
   return query;
 };
 
+// Get all articles  belong to a category
+ArticleModel.getAllArticlesByCategory = (categoryTitle) => {
+  console.log("... RUN - ArticleModel.getAllArticlesByCategory(categoryTitle)");
+  const query = ArticleModel.find({ category: categoryTitle }).sort({
+    createdAt: "desc",
+  });
+
+  return query;
+};
+
 ArticleModel.addArticle = (articleToAdd) => {
-  console.log("... RUN - ArticleModel.addArticle");
+  console.log("... RUN - ArticleModel.addArticle()");
   return articleToAdd.save();
 };
 
 ArticleModel.getArticle = (articleSlug) => {
-  console.log("... RUN - ArticleModel.getArticle");
+  console.log("... RUN - ArticleModel.getArticle()");
   const query = ArticleModel.findOne({ slug: articleSlug });
   return query;
 };
 
 ArticleModel.deleteArticle = (articleId) => {
-  console.log("... RUN - ArticleModel.deleteArticle");
+  console.log("... RUN - ArticleModel.deleteArticle()");
   return ArticleModel.findByIdAndDelete(articleId);
 };
 
 ArticleModel.getArticleById = (articleId) => {
-  console.log("... RUN - ArticleModel.getArticleById");
+  console.log("... RUN - ArticleModel.getArticleById()");
   const query = ArticleModel.findById(articleId);
   return query;
 };

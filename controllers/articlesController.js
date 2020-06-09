@@ -5,7 +5,10 @@ articlesController.showSingleArticle = async (req, res) => {
   try {
     console.log("... RUN - articlesController.showSingleArticle");
     const article = await ArticleModel.getArticle(req.params.slug);
-    res.render("articles/single-page", { article: article });
+    if (article.title) {
+      //console.log("khong null");
+      res.render("default/single-page", { article: article });
+    }
   } catch (e) {
     console.log(
       "... Get error when run - articlesController.showSingleArticle - " + e

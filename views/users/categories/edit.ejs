@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>New article</title>
+    <title>Edit category: <%= category.title %></title>
     <base href="/" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,9 +29,12 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="mb-4">New article</h1>
+      <h1 class="mb-4">Edit category</h1>
 
-      <form action="/users/articles" method="POST">
+      <form
+        action="/users/categories/<%= category.id %>?_method=PUT"
+        method="POST"
+      >
         <%- include('_form_fields') %>
       </form>
     </div>

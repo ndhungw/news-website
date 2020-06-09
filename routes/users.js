@@ -33,6 +33,25 @@ router.put("/articles/:id", usersController.editArticle);
 /* Manage authentication */
 
 /* Manage categories */
+
+// GET categories listing
 router.get("/categories", usersController.showAllCategories);
+
+// GET new category page (R)
+router.get("/categories/new", usersController.showNewCategoryPage);
+
+// GET category by slug (R)
+router.get("/categories/:categorySlug", usersController.getCategory);
+
+// POST new category form (C)
+router.post("/categories", usersController.addCategory);
+
+// DELETE a category (D)
+router.delete("/categories/:id", usersController.deleteCategory);
+
+router.get("/categories/edit/:id", usersController.showEditCategoryPage);
+
+router.put("/categories/:id", usersController.editCategory);
+// router.put("/articles/:id", usersController.saveArticleAndRedirect('edit'));
 
 module.exports = router;

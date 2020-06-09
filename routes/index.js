@@ -1,23 +1,15 @@
 const express = require("express");
 const router = express.Router();
 const articlesController = require("./../controllers/articlesController");
+const indexController = require("../controllers/indexController");
 
 /* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("default/index", { title: "Express" });
-});
+router.get("/", indexController.showHomePage);
 
 /* GET contact page. */
-router.get("/pages/contact.html", function (req, res, next) {
-  res.render("default/contact", { title: "Express" });
-});
+router.get("/pages/contact.html", indexController.showContactPage);
 
 /* GET single-page page. */
-// router.get("/pages/single_page.html", function (req, res, next) {
-//   res.render("pages/single-page.ejs", { title: "Express" });
-// });
-
-/* GET single-page page. */
-router.get("/:slug", articlesController.showSingleArticle);
+router.get("/home/:categorySlug/:slug", articlesController.showSingleArticle);
 
 module.exports = router;
