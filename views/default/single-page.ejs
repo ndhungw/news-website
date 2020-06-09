@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>NewsFeed | Pages | Single Page</title>
+    <title><%= article.title %></title>
     <base href="/" />
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -50,7 +50,7 @@
       <%-include('../partials/navArea')%>
 
       <!-- newsSection -->
-      <%-include('../partials/newsSection')%>
+      <!-- <%-include('../partials/newsSection')%> -->
 
       <!-- start contentSection -->
       <section id="contentSection">
@@ -70,8 +70,8 @@
                   <a href="#"><i class="fa fa-user"></i>User</a>
                   <span><i class="fa fa-calendar"></i>6:49 AM</span>
                   <span
-                    ><i class="fa fa-calendar"></i><%=
-                    article.createdAt.toLocaleDateString() %></span
+                    ><i class="fa fa-calendar"></i><%= article.createdAt
+                    %></span
                   >
                   <a href="#"><i class="fa fa-tags"></i>Category Name</a>
                 </div>
