@@ -41,7 +41,10 @@ router.get("/categories", usersController.showAllCategories);
 router.get("/categories/new", usersController.showNewCategoryPage);
 
 // GET category by slug (R)
-router.get("/categories/:categorySlug", usersController.getCategory);
+router.get(
+  "/categories/:categorySlug",
+  usersController.getCategoryByCategorySlug
+);
 
 // POST new category form (C)
 router.post("/categories", usersController.addCategory);

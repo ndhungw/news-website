@@ -66,15 +66,29 @@ ArticleModel.getAllArticles = () => {
   return query;
 };
 
-// Get all articles  belong to a category
-ArticleModel.getAllArticlesByCategory = (categoryTitle) => {
-  console.log("... RUN - ArticleModel.getAllArticlesByCategory(categoryTitle)");
+// Get all articles  belong to a category title
+ArticleModel.getAllArticlesByCategoryTitle = (categoryTitle) => {
+  console.log(
+    "... RUN - ArticleModel.getAllArticlesByCategoryTitle(categoryTitle)"
+  );
   const query = ArticleModel.find({ category: categoryTitle }).sort({
     createdAt: "desc",
   });
 
   return query;
 };
+
+// Get all articles  belong to a category slug
+// ArticleModel.getAllArticlesByCategorySlug = (categorySlug) => {
+//   console.log(
+//     "... RUN - ArticleModel.getAllArticlesByCategorySlug(categorySlug)"
+//   );
+//   const query = ArticleModel.find({ categorySlug: categorySlug }).sort({
+//     createdAt: "desc",
+//   });
+
+//   return query;
+// };
 
 ArticleModel.addArticle = (articleToAdd) => {
   console.log("... RUN - ArticleModel.addArticle()");

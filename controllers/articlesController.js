@@ -1,13 +1,21 @@
 const ArticleModel = require("../models/articleModel");
+const CategoryModel = require("../models/categoryModel");
+
 articlesController = {};
 
-articlesController.showSingleArticle = async (req, res) => {
+articlesController.showSingleArticlePage = async (req, res) => {
   try {
     console.log("... RUN - articlesController.showSingleArticle");
     const article = await ArticleModel.getArticle(req.params.slug);
-    if (article.title) {
-      //console.log("khong null");
-      res.render("default/single-page", { article: article });
+    const category = await CategoryModel.getCategoryByCategoryTitle(
+      article.category
+    );
+
+    if (article) {
+      res.render("default/article", {
+        article: article,
+        category: category,
+      });
     }
   } catch (e) {
     console.log(

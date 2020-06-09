@@ -12,7 +12,7 @@ indexController.showHomePage = async (req, res) => {
     let categoriesWithCorrespondingArticles = [];
 
     for (let i = 0; i < categories.length; i++) {
-      const articles = await ArticleModel.getAllArticlesByCategory(
+      const articles = await ArticleModel.getAllArticlesByCategoryTitle(
         categories[i].title
       ).limit(5); // only get 5 articles to show
       const latestArticle = articles[0]; // the first will be the latest cuz we had used find with sort desc

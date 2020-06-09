@@ -38,26 +38,37 @@ CategoryModel.getAllCategories = () => {
 
 // add a new category
 CategoryModel.addCategory = (categoryToAdd) => {
-  console.log("... RUN - CategoryModel.addCategory()");
+  console.log("... RUN - CategoryModel.addCategory(categoryToAdd)");
   return categoryToAdd.save();
 };
 
 // get a category by categorySlug
-CategoryModel.getCategory = (categorySlug) => {
-  console.log("... RUN - CategoryModel.getCategory()");
-  const query = CategoryModel.findOne({ slug: categorySlug });
+CategoryModel.getCategoryByCategorySlug = (categorySlug) => {
+  console.log(
+    "... RUN - CategoryModel.getCategoryByCategorySlug(categorySlug)"
+  );
+  const query = CategoryModel.findOne({ categorySlug: categorySlug });
+  return query;
+};
+
+// get a category by category title
+CategoryModel.getCategoryByCategoryTitle = (categoryTitle) => {
+  console.log(
+    "... RUN - CategoryModel.getCategoryByCategoryTitle(categoryTitle)"
+  );
+  const query = CategoryModel.findOne({ title: categoryTitle });
   return query;
 };
 
 // delete a category by id
 CategoryModel.deleteCategory = (categoryId) => {
-  console.log("... RUN - CategoryModel.deleteCategory()");
+  console.log("... RUN - CategoryModel.deleteCategory(categoryId)");
   return CategoryModel.findByIdAndDelete(categoryId);
 };
 
 // get a category by id
 CategoryModel.getCategoryById = (categoryId) => {
-  console.log("... RUN - CategoryModel.getCategoryById()");
+  console.log("... RUN - CategoryModel.getCategoryById(categoryId)");
   const query = CategoryModel.findById(categoryId);
   return query;
 };

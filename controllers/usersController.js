@@ -174,13 +174,18 @@ usersController.showNewCategoryPage = (req, res, next) => {
   }
 };
 
-usersController.getCategory = async (req, res, next) => {
+usersController.getCategoryByCategorySlug = async (req, res, next) => {
   try {
-    console.log("... RUN - usersController.getCategory");
-    const article = await CategoryModel.getCategory(req.params.categorySlug);
+    console.log("... RUN - usersController.getCategoryByCategorySlug");
+    const article = await CategoryModel.getCategoryByCategorySlug(
+      req.params.categorySlug
+    );
     res.render("users/categories/show", { category: category });
   } catch (e) {
-    console.log("... Get error when run - usersController.getCategory - " + e);
+    console.log(
+      "... Get error when run - usersController.getCategoryByCategorySlug - " +
+        e
+    );
     res.redirect("/users/categories");
   }
 };
