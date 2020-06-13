@@ -12,15 +12,15 @@ categoriesController.showCategoryPage = async (req, res) => {
     const articles = await ArticleModel.getAllArticlesByCategoryTitle(
       category.title
     );
-
-    console.log(req.params.categorySlug);
-    console.log("category:\n" + category);
-    console.log("articles:\n" + articles);
+    const categories = await CategoryModel.getAllCategories();
+    const tenLatestArticles = await ArticleModel.getAllArticles().limit(10);
 
     if (articles) {
       res.render("default/category", {
         category: category,
         articles: articles,
+        categories: categories,
+        latestArticles: tenLatestArticles,
       });
     }
   } catch (e) {

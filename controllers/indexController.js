@@ -35,6 +35,7 @@ indexController.showHomePage = async (req, res) => {
       title: "Trang chủ",
       categoriesWithCorrespondingArticles: categoriesWithCorrespondingArticles,
       latestArticles: tenLatestArticles,
+      categories: categories,
     });
   } catch (e) {
     console.log("... Get error when run - indexController.showHomePage - " + e);
@@ -43,7 +44,19 @@ indexController.showHomePage = async (req, res) => {
 };
 
 indexController.showContactPage = async (req, res) => {
-  res.render("default/contact", { title: "Liên hệ" });
+  try {
+    const categories = await CategoryModel.getAllCategories();
+    const tenLatestArticles = await ArticleModel.getAllArticles().limit(10);
+    res.render("default/contact", {
+      title: "Liên hệ",
+      categories: categories,
+      latestArticles: tenLatestArticles,
+    });
+  } catch (e) {
+    console.log(
+      "... Get error when run - indexController.showContactPage - " + e
+    );
+  }
 };
 
 module.exports = indexController;

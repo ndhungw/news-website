@@ -10,11 +10,15 @@ articlesController.showSingleArticlePage = async (req, res) => {
     const category = await CategoryModel.getCategoryByCategoryTitle(
       article.category
     );
+    const categories = await CategoryModel.getAllCategories();
+    tenLatestArticles = await ArticleModel.getAllArticles().limit(10);
 
     if (article) {
       res.render("default/article", {
         article: article,
         category: category,
+        categories: categories,
+        latestArticles: tenLatestArticles,
       });
     }
   } catch (e) {
