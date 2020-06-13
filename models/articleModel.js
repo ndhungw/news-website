@@ -32,6 +32,11 @@ let articleSchema = new Schema({
     required: true,
     unique: true,
   },
+  ctgSlug: {
+    type: String,
+    required: true,
+    unique: true,
+  },
   sanitizedHTML: {
     type: String,
     required: true,
@@ -42,6 +47,14 @@ articleSchema.pre("validate", function (next) {
   // create slug from title
   if (this.title) {
     this.slug = slugify(this.title, {
+      lower: true,
+      strict: true,
+    });
+  }
+
+  // create slug from category
+  if (this.title) {
+    this.ctgSlug = slugify(this.category, {
       lower: true,
       strict: true,
     });
