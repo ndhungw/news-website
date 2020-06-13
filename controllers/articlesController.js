@@ -15,6 +15,7 @@ articlesController.showSingleArticlePage = async (req, res) => {
 
     if (article) {
       res.render("default/article", {
+        title: article.title,
         article: article,
         category: category,
         categories: categories,

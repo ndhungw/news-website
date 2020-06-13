@@ -17,6 +17,7 @@ categoriesController.showCategoryPage = async (req, res) => {
 
     if (articles) {
       res.render("default/category", {
+        title: "Các bài viết thuộc danh mục",
         category: category,
         articles: articles,
         categories: categories,
