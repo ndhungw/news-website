@@ -7,7 +7,11 @@
       <li>
         <div class="media">
           <a href="/home/<%= latestArticle.ctgSlug %>/<%= latestArticle.slug %>" class="media-left">
-            <img alt="" src="images/post_img1.jpg" />
+            <% if (latestArticle.coverImagePath != null) { %>
+            <img src="<%= latestArticle.coverImagePath %>" />
+            <% } else { %>
+            <img src="images/post_img1.jpg">
+            <% } %>
           </a>
           <div class="media-body">
             <a href="/home/<%= latestArticle.ctgSlug %>/<%= latestArticle.slug %>" class="catg_title">
