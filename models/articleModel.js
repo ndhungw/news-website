@@ -15,6 +15,18 @@ let articleSchema = new Schema({
   description: {
     type: String,
   },
+  coverImage: {
+    type: Buffer,
+    required: true,
+  },
+  coverImageType: {
+    type: String,
+    required: true,
+  },
+  category: {
+    type: String,
+    required: true,
+  },
   markdown: {
     type: String,
     required: true,
@@ -27,6 +39,10 @@ let articleSchema = new Schema({
     type: String,
     required: true,
     unique: true,
+  },
+  ctgSlug: {
+    type: String,
+    required: true,
   },
   sanitizedHTML: {
     type: String,
@@ -43,6 +59,14 @@ articleSchema.pre("validate", function (next) {
     });
   }
 
+  // create slug from category
+  if (this.title) {
+    this.ctgSlug = slugify(this.category, {
+      lower: true,
+      strict: true,
+    });
+  }
+
   if (this.markdown) {
     this.sanitizedHTML = dompurify.sanitize(marked(this.markdown));
   }
@@ -50,11 +74,17 @@ articleSchema.pre("validate", function (next) {
   next();
 });
 
+articleSchema.virtual('coverImagePath').get(function() {
+  if (this.coverImage != null && this.coverImageType != null) {
+    return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
+  }
+})
+
 let ArticleModel = mongoose.model("Article", articleSchema, "articles");
 
 // Get all articles
 ArticleModel.getAllArticles = () => {
-  console.log("... RUN - ArticleModel.getAll()");
+  console.log("... RUN - ArticleModel.getAllArticles()");
   const query = ArticleModel.find().sort({
     createdAt: "desc",
   });
@@ -62,24 +92,48 @@ ArticleModel.getAllArticles = () => {
   return query;
 };
 
+// Get all articles  belong to a category title
+ArticleModel.getAllArticlesByCategoryTitle = (categoryTitle) => {
+  console.log(
+    "... RUN - ArticleModel.getAllArticlesByCategoryTitle(categoryTitle)"
+  );
+  const query = ArticleModel.find({ category: categoryTitle }).sort({
+    createdAt: "desc",
+  });
+
+  return query;
+};
+
+// Get all articles  belong to a category slug
+// ArticleModel.getAllArticlesByCategorySlug = (categorySlug) => {
+//   console.log(
+//     "... RUN - ArticleModel.getAllArticlesByCategorySlug(categorySlug)"
+//   );
+//   const query = ArticleModel.find({ categorySlug: categorySlug }).sort({
+//     createdAt: "desc",
+//   });
+
+//   return query;
+// };
+
 ArticleModel.addArticle = (articleToAdd) => {
-  console.log("... RUN - ArticleModel.addArticle");
+  console.log("... RUN - ArticleModel.addArticle()");
   return articleToAdd.save();
 };
 
 ArticleModel.getArticle = (articleSlug) => {
-  console.log("... RUN - ArticleModel.getArticle");
+  console.log("... RUN - ArticleModel.getArticle()");
   const query = ArticleModel.findOne({ slug: articleSlug });
   return query;
 };
 
 ArticleModel.deleteArticle = (articleId) => {
-  console.log("... RUN - ArticleModel.deleteArticle");
+  console.log("... RUN - ArticleModel.deleteArticle()");
   return ArticleModel.findByIdAndDelete(articleId);
 };
 
 ArticleModel.getArticleById = (articleId) => {
-  console.log("... RUN - ArticleModel.getArticleById");
+  console.log("... RUN - ArticleModel.getArticleById()");
   const query = ArticleModel.findById(articleId);
   return query;
 };

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Article list</title>
+  <base href="/" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+
+  <!-- datatable -->
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.bootstrap4.min.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="mb-4">Blog Articles</h1>
+    <div class="card mt-4 mb-4">
+      <a href="/users/articles/new" class="btn btn-success">New Article</a>
+    </div>
+
+    <table id="articlesTable" class="table table-striped table-bordered" style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Created at</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% articles.forEach(article => { %>
+        <tr>
+          <td><%= article.title %></td>
+          <td><%= article.category %></td>
+          <td><%= article.createdAt.toLocaleString() %></td>
+          <td><%= article.description %></td>
+          <td>
+            <div class="d-inline">
+              <a href="/users/articles/<%= article.slug %>" class="btn btn-primary mt-1 mb-1">
+                Read more
+              </a>
+
+              <a href="/users/articles/edit/<%= article.id %>" class="btn btn-info mt-1 mb-1">
+                Edit
+              </a>
+
+              <form action="/users/articles/<%= article.id %>?_method=DELETE" method="POST">
+                <button type="submit" class="btn btn-danger mt-1 mb-1">
+                  Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        <% }) %>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Created at</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.bootstrap4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+  <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.colVis.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      var table = $("#articlesTable").DataTable({
+        lengthChange: false,
+        buttons: ["copy", "excel", "pdf", "colvis"],
+      });
+
+      table
+        .buttons()
+        .container()
+        .appendTo("#example_wrapper .col-md-6:eq(0)");
+    });
+  </script>
+</body>
+
+</html>
