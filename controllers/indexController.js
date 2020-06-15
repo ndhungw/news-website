@@ -29,12 +29,12 @@ indexController.showHomePage = async (req, res) => {
       };
     }
 
-    const tenLatestArticles = await ArticleModel.getAllArticles().limit(10);
+    const latestArticles = await ArticleModel.getAllArticles().limit(5);
 
     res.render("default/index", {
       title: "Trang chủ",
       categoriesWithCorrespondingArticles: categoriesWithCorrespondingArticles,
-      latestArticles: tenLatestArticles,
+      latestArticles: latestArticles,
       categories: categories,
     });
   } catch (e) {
