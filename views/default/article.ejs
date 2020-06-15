@@ -21,61 +21,9 @@
             <a href="home/<%= category.categorySlug %>"><i class="fa fa-tags"></i><%= category.title %></a>
           </div>
 
-          <!-- start markdown here -->
+          <!-- content as markdown here -->
           <div class="single_page_content">
             <%- article.sanitizedHTML %>
-
-            <img class="img-center" src="../images/single_post_img.jpg" alt="" />
-            <p>
-              Nunc tincidunt, elit non cursus euismod, lacus augue ornare
-              metus, egestas imperdiet nulla nisl quis mauris. Suspendisse
-              a pharetra urna. Morbi dui lectus, pharetra nec elementum
-              eget, vulputate ut nisi. Aliquam accumsan, nulla sed feugiat
-              vehicula, lacus justo semper libero, quis porttitor turpis
-              odio sit amet ligula. Duis dapibus fermentum orci, nec
-              malesuada libero vehicula ut. Integer sodales, urna eget
-              interdum eleifend, nulla nibh laoreet nisl, quis dignissim
-              mauris dolor eget mi. Donec at mauris enim. Duis nisi
-              tellus, adipiscing a convallis quis, tristique vitae risus.
-              Nullam molestie gravida lobortis. Proin ut nibh quis felis
-              auctor ornare. Cras ultricies, nibh at mollis faucibus,
-              justo eros porttitor mi, quis auctor lectus arcu sit amet
-              nunc. Vivamus gravida vehicula arcu, vitae vulputate augue
-              lacinia faucibus.
-            </p>
-            <blockquote>
-              Donec volutpat nibh sit amet libero ornare non laoreet arcu
-              luctus. Donec id arcu quis mauris euismod placerat sit amet
-              ut metus. Sed imperdiet fringilla sem eget euismod.
-              Pellentesque habitant morbi tristique senectus et netus et
-              malesuada fames ac turpis egestas. Pellentesque adipiscing,
-              neque ut pulvinar tincidunt, est sem euismod odio, eu
-              ullamcorper turpis nisl sit amet velit. Nullam vitae nibh
-              odio, non scelerisque nibh. Vestibulum ut est augue, in
-              varius purus.
-            </blockquote>
-            <ul>
-              <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-              <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-              <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-              <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-              <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-              <li>Nullam vitae nibh odio, non scelerisque nibh</li>
-            </ul>
-            <h2>This is h2 title</h2>
-            <h3>This is h3 title</h3>
-            <h4>This is h4 title</h4>
-            <h5>This is h5 title</h5>
-            <h6>This is h6 Title</h6>
-            <button class="btn default-btn">Default</button>
-            <button class="btn btn-red">Red Button</button>
-            <button class="btn btn-yellow">Yellow Button</button>
-            <button class="btn btn-green">Green Button</button>
-            <button class="btn btn-black">Black Button</button>
-            <button class="btn btn-orange">Orange Button</button>
-            <button class="btn btn-blue">Blue Button</button>
-            <button class="btn btn-lime">Lime Button</button>
-            <button class="btn btn-theme">Theme Button</button>
           </div>
           <div class="social_link">
             <ul class="sociallink_nav">
@@ -96,44 +44,33 @@
               </li>
             </ul>
           </div>
-          <div class="related_post">
-            <h2>Related Post <i class="fa fa-thumbs-o-up"></i></h2>
-            <ul class="spost_nav wow fadeInDown animated">
-              <li>
-                <div class="media">
-                  <a class="media-left" href="single_page.html">
-                    <img src="../images/post_img1.jpg" alt="" />
-                  </a>
-                  <div class="media-body">
-                    <a class="catg_title" href="single_page.html">
-                      Aliquam malesuada diam eget turpis varius</a>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="media">
-                  <a class="media-left" href="single_page.html">
-                    <img src="../images/post_img2.jpg" alt="" />
-                  </a>
-                  <div class="media-body">
-                    <a class="catg_title" href="single_page.html">
-                      Aliquam malesuada diam eget turpis varius</a>
-                  </div>
-                </div>
-              </li>
-              <li>
-                <div class="media">
-                  <a class="media-left" href="single_page.html">
-                    <img src="../images/post_img1.jpg" alt="" />
-                  </a>
-                  <div class="media-body">
-                    <a class="catg_title" href="single_page.html">
-                      Aliquam malesuada diam eget turpis varius</a>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
+
+          <!-- Related post -->
+          <% if (relatedArticles != null) { %>
+            <div class="related_post">
+              <h2>Bài viết liên quan <i class="fa fa-thumbs-o-up"></i></h2>
+              <ul class="spost_nav wow fadeInDown animated">
+                <% relatedArticles.forEach(relatedArticle => { %>
+                  <li>
+                    <div class="media">
+                      <a class="media-left" href="home/<%= relatedArticle.ctgSlug %>/<%= relatedArticle.slug %>">
+                        <% if (relatedArticle.coverImagePath != null) { %>
+                          <img src="<%= relatedArticle.coverImagePath %>" />
+                          <% } else { %>
+                          <img src="images/post_img1.jpg">
+                          <% } %>
+                      </a>
+                      <div class="media-body">
+                        <a class="catg_title" href="home/<%= relatedArticle.ctgSlug %>/<%= relatedArticle.slug %>">
+                          <%= relatedArticle.description %>
+                        </a>
+                      </div>
+                    </div>
+                  </li>
+                <% }) %>
+              </ul>
+            </div>
+          <% } %>          
         </div>
       </div>
     </div>
@@ -159,7 +96,7 @@
       <aside class="right_content">
         <%-include('../partials/latest-post')%>
 
-        <div class="single_sidebar">
+        <!-- <div class="single_sidebar">
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
               <a href="#category" aria-controls="home" role="tab" data-toggle="tab">Category</a>
@@ -239,13 +176,13 @@
               </ul>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Sponsor -->
-        <div class="single_sidebar wow fadeInDown">
+        <!-- <div class="single_sidebar wow fadeInDown">
           <h2><span>Sponsor</span></h2>
           <a class="sideAdd" href="#"><img src="../images/add_img.jpg" alt="" /></a>
-        </div>
+        </div> -->
 
         <!-- Category Archive -->
         <div class="single_sidebar wow fadeInDown">
@@ -260,7 +197,7 @@
         </div>
 
         <!-- Links -->
-        <div class="single_sidebar wow fadeInDown">
+        <!-- <div class="single_sidebar wow fadeInDown">
           <h2><span>Links</span></h2>
           <ul>
             <li><a href="#">Blog</a></li>
@@ -268,7 +205,7 @@
             <li><a href="#">Login</a></li>
             <li><a href="#">Life &amp; Style</a></li>
           </ul>
-        </div>
+        </div> -->
       </aside>
     </div>
   </div>
