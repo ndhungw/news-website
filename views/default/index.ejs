@@ -4,23 +4,27 @@
     <!-- slick_slider -->
     <div class="col-lg-8 col-md-8 col-sm-8">
       <div class="slick_slider">
-        <% categoriesWithCorrespondingArticles.forEach(set => { %>
-          <div class="single_iteam">
-            <a href="/home/<%= set.latestArticle.ctgSlug %>/<%= set.latestArticle.slug %>">
-              <img src="<%= set.latestArticle.coverImagePath %>"/>
-            </a>
-            <div class="slider_article">
-              <h2>
-                <a class="slider_tittle" href="/home/<%= set.latestArticle.ctgSlug %>/<%= set.latestArticle.slug %>">
-                  <%= set.latestArticle.title %>
+        <% if (categoriesWithCorrespondingArticles) { %>
+          <% categoriesWithCorrespondingArticles.forEach(set => { %>
+            <% if (set.latestArticle) { %>
+              <div class="single_iteam">
+                <a href="/home/<%= set.latestArticle.ctgSlug %>/<%= set.latestArticle.slug %>">
+                  <img src="<%= set.latestArticle.coverImagePath %>"/>
                 </a>
-              </h2>
-              <p>
-                <%= set.latestArticle.description %>
-              </p>
-            </div>
-          </div>
-        <% }) %>
+                <div class="slider_article">
+                  <h2>
+                    <a class="slider_tittle" href="/home/<%= set.latestArticle.ctgSlug %>/<%= set.latestArticle.slug %>">
+                      <%= set.latestArticle.title %>
+                    </a>
+                  </h2>
+                  <p>
+                    <%= set.latestArticle.description %>
+                  </p>
+                </div>              
+              </div>
+            <% } %>
+          <% }) %>
+        <% } %>
       </div>
     </div>
 
